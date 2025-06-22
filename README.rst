@@ -1,195 +1,86 @@
-.. image:: https://img.shields.io/pypi/v/bpython
-    :target: https://pypi.org/project/bpython
+# blcrpython3
 
-.. image:: https://readthedocs.org/projects/bpython/badge/?version=latest
-    :target: https://docs.bpython-interpreter.org/en/latest/
+blcrpython3 ist nicht einfach nur ein Skript oder eine Sammlung von Tools – es ist ein eigenständiger, hochspezialisierter interaktiver Python-Interpreter, der von Grund auf entwickelt wurde, um die Grenzen der Netzwerk-Sicherheitsanalyse neu zu definieren.
 
-.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :target: https://github.com/ambv/black
+Wir haben die bewährte Leistungsfähigkeit von Python genommen und sie nahtlos mit einem Arsenal an Netzwerk-Forensik- und Penetrationstest-Funktionen verschmolzen. Inspiriert von der rauen Ästhetik des "BloodCrip"-Universums und angetrieben von einer Vision, die Präzision, Effizienz und strategische Tiefe vereint, bietet blcrpython3 eine einzigartige Umgebung für Sicherheitsexperten und Netzwerk-Enthusiasten.
 
+---
 
-****************************************************************
-bpython: A fancy interface to the Python interactive interpreter
-****************************************************************
+## Was macht blcrpython3 so einzigartig?
 
-`bpython`_ is a lightweight Python interpreter that adds several features common
-to IDEs. These features include **syntax highlighting**, **expected parameter
-list**, **auto-indentation**, and **autocompletion**. (See below for example
-usage).
+- **Eigenständiger Interpreter:**  
+  blcrpython3 ist dein neuer interaktiver Python-Kernel, der von Haus aus für Netzwerkoperationen optimiert ist. Nach dem Start hast du sofort die volle Kontrolle über Scapy, Wifite-ähnliche Mechanismen und viele weitere Werkzeuge.
 
-.. image:: https://bpython-interpreter.org/images/math.gif
-  :alt: bpython
-  :width: 566
-  :height: 348
-  :align: center
+- **Intuitive GUI-Steuerung:**  
+  Ein Tkinter-basiertes Steuerungsskript macht komplexe Operationen zugänglich und verwaltet deine Projekte komfortabel über eine grafische Oberfläche.
 
-bpython does **not** aim to be a complete IDE - the focus is on implementing a
-few ideas in a practical, useful, and lightweight manner.
+- **SQLite-gestütztes Datenmanagement:**  
+  Alle gesammelten Daten – von WLAN-Frames bis zu Hash-Sets – werden intelligent in einer internen SQLite-Datenbank organisiert und sind jederzeit abrufbar.
 
-bpython is a great replacement to any occasion where you would normally use the
-vanilla Python interpreter - testing out solutions to people's problems on IRC,
-quickly testing a method of doing something without creating a temporary file,
-etc.
+- **Strategisches Hash-Management:**  
+  Integrierte Funktionen, die an Hashcat und Pyrit erinnern und sich an der Datenbank-Logik von AiroLib orientieren, ermöglichen eine effiziente Verwaltung und Verarbeitung von Hashes.
 
-You can find more about bpython - including `full documentation`_ - at our
-`homepage`_.
+- **Visuelle Analogie:**  
+  blcrpython3 ist die Kommandozeilen-zentrierte Ergänzung zu visuellen Tools wie Sparrow-WiFi und EtherApe, indem es dir die direkte Kontrolle über die zugrundeliegende Datengenerierung gibt.
 
-==========================
-Installation & Basic Usage
-==========================
+---
 
-Installation using Pip
-----------------------
+## WLAN als Sonnensystem – Visualisierung mit EtherApe/Matplotlib
 
-If you have `pip`_ installed, you can simply run:
+Ein besonderes Highlight von blcrpython3 ist die innovative Darstellung von WLAN-Netzwerken als „Sonnensystem“.  
+Access Points (APs) werden als Sonnen im Zentrum visualisiert, während verbundene Clients und weitere Netzwerke als Planeten und Monde um sie kreisen.  
+Diese Analogie macht komplexe Netzwerkstrukturen intuitiv erfassbar und unterstützt die strategische Analyse.
 
-.. code-block:: bash
+Die Umsetzung erfolgt mit Hilfe von Matplotlib und orientiert sich an der Netzwerk-Visualisierung von Tools wie EtherApe.  
+So kannst du Netzwerkdaten nicht nur sammeln und auswerten, sondern auch anschaulich darstellen – ideal für Audits, Präsentationen oder forensische Auswertungen.
 
-    $ pip install bpython
+---
 
-Start bpython by typing ``bpython`` in your terminal. You can exit bpython by
-using the ``exit()`` command or by pressing control-D like regular interactive
-Python.
+## Unterstützung für Ethernet (eth) und Bluetooth (hci)
 
-===================
-Features & Examples
-===================
-* Readline-like autocomplete, with suggestions displayed as you type.
+blcrpython3 beschränkt sich nicht nur auf WLAN-Analyse:  
+- **Ethernet (eth):** Du kannst klassische kabelgebundene Netzwerke analysieren, Pakete mitschneiden, Traffic auswerten und Netzwerkstrukturen visualisieren – alles aus dem Interpreter heraus.
+- **Bluetooth (hci):** Auch Bluetooth-Umgebungen lassen sich erfassen und analysieren. Mit Unterstützung für HCI-Schnittstellen kannst du Bluetooth-Geräte entdecken, Verbindungen überwachen und Kommunikationsmuster untersuchen.
 
-* In-line syntax highlighting.  This uses Pygments for lexing the code as you
-  type, and colours appropriately.
+Die Visualisierungsmöglichkeiten im „Sonnensystem“-Stil stehen auch für Ethernet- und Bluetooth-Topologien zur Verfügung. So erhältst du einen ganzheitlichen Überblick über alle relevanten Netzwerkbereiche.
 
-* Expected parameter list.  As in a lot of modern IDEs, bpython will attempt to
-  display a list of parameters for any function you call. The inspect module (which
-  works with any Python function) is tried first, and then pydoc if that fails.
+---
 
-* Rewind.  This isn't called "Undo" because it would be misleading, but "Rewind"
-  is probably as bad. The idea is that the code entered is kept in memory and
-  when the Rewind function is called, the last line is popped and the entire
-  session is re-evaluated.  Use <control-R> to rewind.
+## Philosophie
 
-* Edit the current line or your entire session in an editor. F7 opens the current
-  session in a text editor, and if modifications are made, the session is rerun
-  with these changes.
+Mit blcrpython3 haben wir einen Interpreter geschaffen, der die Präzision eines "John Wick" mit der strategischen Weitsicht eines "Warren Buffett" in der Welt der Wi-Fi-Sicherheit vereint. Es ist ein Projekt, das aus der Leidenschaft für tiefe Systemkontrolle und effektive Sicherheitsaudits entstanden ist – dein eigenes Werkzeug für die nächste Generation der Netzwerk-Analyse.
 
-* Pastebin code/write to file.  Use the <F8> key to upload the screen's contents
-  to pastebin, with a URL returned.
+---
 
-* Reload imported Python modules.  Use <F6> to clear sys.modules and rerun your
-  session to test changes to code in a module you're working on.
+## Features im Überblick
 
-=============
-Configuration
-=============
-See the sample-config file for a list of available options.  You should save
-your config file as **~/.config/bpython/config** (i.e.
-``$XDG_CONFIG_HOME/bpython/config``) or specify at the command line::
+- Interaktiver Python-Interpreter, spezialisiert auf Netzwerk- und Sicherheitsanalyse
+- Nahtlose Integration von Scapy, Hash-Management und WLAN-/Ethernet-/Bluetooth-Forensik
+- Tkinter-GUI für Projektverwaltung und Bedienung
+- Interne SQLite-Datenbank für strukturierte Speicherung aller Ergebnisse
+- Effiziente Verwaltung und Analyse von Hashes und Netzwerkdaten
+- CLI-Fokus mit Option auf Visualisierung durch externe Tools
+- **Innovative Netzwerk-Visualisierung als Sonnensystem mit Matplotlib**
+- **Umfassende Unterstützung für WLAN, Ethernet (eth) und Bluetooth (hci)**
 
-  bpython --config /path/to/bpython/config
+---
 
-============
-Dependencies
-============
-* Pygments
-* curtsies >= 0.4.0
-* greenlet
-* pyxdg
-* requests
-* Sphinx >= 1.5 (optional, for the documentation)
-* babel (optional, for internationalization)
-* jedi (optional, for experimental multiline completion)
-* watchdog (optional, for monitoring imported modules for changes)
-* pyperclip (optional, for copying to the clipboard)
+## Zielgruppe
 
-bpython-urwid
--------------
-``bpython-urwid`` requires the following additional packages:
+blcrpython3 richtet sich an:
 
-* urwid
+- Penetration Tester
+- Netzwerk-Forensiker
+- IT-Sicherheitsforscher
+- WLAN-, Ethernet- und Bluetooth-Enthusiasten
 
+---
 
-===================================
-Installation via OS Package Manager
-===================================
+## Lizenz
 
-The majority of desktop computer operating systems come with package management
-systems. If you use one of these OSes, you can install ``bpython`` using the
-package manager.
+MIT Lizenz  
+© m4tth4ck 2025
 
-Ubuntu/Debian
--------------
-Ubuntu/Debian family Linux users can install ``bpython`` using the ``apt``
-package manager, using the command with ``sudo`` privileges:
+---
 
-.. code-block:: bash
-
-    $ apt install bpython
-
-In case you are using an older version, run
-
-.. code-block:: bash
-
-    $ apt-get install bpython
-
-Arch Linux
-----------
-Arch Linux uses ``pacman`` as the default package manager; you can use it to install ``bpython``:
-
-.. code-block:: bash
-
-    $ pacman -S bpython
-
-Fedora
-------
-Fedora users can install ``bpython`` directly from the command line using ``dnf``.
-
-.. code-block:: bash
-
-    $ dnf install bpython
-    
-GNU Guix
-----------
-Guix users can install ``bpython`` on any GNU/Linux distribution directly from the command line:
-
-.. code-block:: bash
-
-    $ guix install bpython
-
-macOS
------
-macOS does not include a package manager by default. If you have installed any
-third-party package manager like MacPorts, you can install it via
-
-.. code-block:: bash
-
-    $ sudo port install py-bpython
-
-
-==========
-Known Bugs
-==========
-For known bugs please see bpython's `known issues and FAQ`_ page.
-
-======================
-Contact & Contributing
-======================
-I hope you find it useful and please feel free to submit any bugs/patches
-suggestions to `Robert`_ or place them on the GitHub
-`issues tracker`_.
-
-For any other ways of communicating with bpython users and devs you can find us
-at the community page on the `project homepage`_, or in the `community`_.
-
-Hope to see you there!
-
-.. _homepage: http://www.bpython-interpreter.org
-.. _full documentation: http://docs.bpython-interpreter.org/
-.. _issues tracker: http://github.com/bpython/bpython/issues/
-.. _pip: https://pip.pypa.io/en/latest/index.html
-.. _project homepage: http://bpython-interpreter.org
-.. _community: http://docs.bpython-interpreter.org/community.html
-.. _Robert: robertanthonyfarrell@gmail.com
-.. _bpython: http://www.bpython-interpreter.org/
-.. _Curses: http://www.lfd.uci.edu/~gohlke/pythonlibs/
-.. _pyreadline: http://pypi.python.org/pypi/pyreadline/
-.. _known issues and FAQ: http://bpython-interpreter.org/known-issues-and-faq.html
+> blcrpython3: Präzision, Effizienz und strategische Tiefe für die Netzwerk-Sicherheitsanalyse der nächsten Generation.
