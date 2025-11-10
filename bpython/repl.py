@@ -535,11 +535,17 @@ class Repl(metaclass=abc.ABCMeta):
 
     @property
     def ps1(self) -> str:
-        return cast(str, getattr(sys, "ps1", ">>> "))
+        if hasattr(sys, "ps1"):
+            # noop in most cases, but at least vscode injects a non-str ps1
+            # see #1041
+            return str(sys.ps1)
+        return ">>> "
 
     @property
     def ps2(self) -> str:
-        return cast(str, getattr(sys, "ps2", "... "))
+        if hasattr(sys, "ps2"):
+            return str(sys.ps2)
+        return "... "
 
     def startup(self) -> None:
         """
@@ -983,11 +989,11 @@ class Repl(metaclass=abc.ABCMeta):
 
         return paste_url
 
-    def push(self, s, insert_into_history=True) -> bool:
+    def push(self, line, insert_into_history=True) -> bool:
         """Push a line of code onto the buffer so it can process it all
         at once when a code block ends"""
         # This push method is used by cli and urwid, but not curtsies
-        s = s.rstrip("\n")
+        s = line.rstrip("\n")
         self.buffer.append(s)
 
         if insert_into_history:
@@ -1210,6 +1216,10 @@ class Repl(metaclass=abc.ABCMeta):
         return subprocess.call(args) == 0
 
     def edit_config(self):
+        if self.config.config_path is None:
+            self.interact.notify(_("No config file specified."))
+            return
+
         if not self.config.config_path.is_file():
             if self.interact.confirm(
                 _("Config file does not exist - create new from default? (y/N)")

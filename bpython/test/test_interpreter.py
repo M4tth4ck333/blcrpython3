@@ -21,66 +21,17 @@ class TestInterpreter(unittest.TestCase):
 
         i.runsource("1.1.1.1")
 
-        if (3, 10, 1) <= sys.version_info[:3]:
-            expected = (
-                "  File "
-                + green('"<input>"')
-                + ", line "
-                + bold(magenta("1"))
-                + "\n    1.1.1.1\n       ^^\n"
-                + bold(red("SyntaxError"))
-                + ": "
-                + cyan("invalid syntax")
-                + "\n"
-            )
-        elif (3, 10) <= sys.version_info[:2]:
-            expected = (
-                "  File "
-                + green('"<input>"')
-                + ", line "
-                + bold(magenta("1"))
-                + "\n    1.1.1.1\n    ^^^^^\n"
-                + bold(red("SyntaxError"))
-                + ": "
-                + cyan("invalid syntax. Perhaps you forgot a comma?")
-                + "\n"
-            )
-        elif (3, 8) <= sys.version_info[:2]:
-            expected = (
-                "  File "
-                + green('"<input>"')
-                + ", line "
-                + bold(magenta("1"))
-                + "\n    1.1.1.1\n       ^\n"
-                + bold(red("SyntaxError"))
-                + ": "
-                + cyan("invalid syntax")
-                + "\n"
-            )
-        elif pypy:
-            expected = (
-                "  File "
-                + green('"<input>"')
-                + ", line "
-                + bold(magenta("1"))
-                + "\n    1.1.1.1\n       ^\n"
-                + bold(red("SyntaxError"))
-                + ": "
-                + cyan("invalid syntax")
-                + "\n"
-            )
-        else:
-            expected = (
-                "  File "
-                + green('"<input>"')
-                + ", line "
-                + bold(magenta("1"))
-                + "\n    1.1.1.1\n        ^\n"
-                + bold(red("SyntaxError"))
-                + ": "
-                + cyan("invalid syntax")
-                + "\n"
-            )
+        expected = (
+            "  File "
+            + green('"<input>"')
+            + ", line "
+            + bold(magenta("1"))
+            + "\n    1.1.1.1\n       ^^\n"
+            + bold(red("SyntaxError"))
+            + ": "
+            + cyan("invalid syntax")
+            + "\n"
+        )
 
         a = i.a
         self.assertMultiLineEqual(str(plain("").join(a)), str(expected))
@@ -99,7 +50,7 @@ class TestInterpreter(unittest.TestCase):
 
         global_not_found = "name 'gfunc' is not defined"
 
-        if (3, 13) <= sys.version_info[:2]:
+        if (3, 13) <= sys.version_info[:2] or pypy:
             expected = (
                 "Traceback (most recent call last):\n  File "
                 + green('"<input>"')
@@ -114,7 +65,7 @@ class TestInterpreter(unittest.TestCase):
                 + cyan(global_not_found)
                 + "\n"
             )
-        elif (3, 11) <= sys.version_info[:2]:
+        else:
             expected = (
                 "Traceback (most recent call last):\n  File "
                 + green('"<input>"')
@@ -124,20 +75,6 @@ class TestInterpreter(unittest.TestCase):
                 + cyan("<module>")
                 + "\n    gfunc()"
                 + "\n     ^^^^^\n"
-                + bold(red("NameError"))
-                + ": "
-                + cyan(global_not_found)
-                + "\n"
-            )
-        else:
-            expected = (
-                "Traceback (most recent call last):\n  File "
-                + green('"<input>"')
-                + ", line "
-                + bold(magenta("1"))
-                + ", in "
-                + cyan("<module>")
-                + "\n    gfunc()\n"
                 + bold(red("NameError"))
                 + ": "
                 + cyan(global_not_found)

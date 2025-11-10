@@ -14,13 +14,7 @@ from enum import Enum
 from types import FrameType, TracebackType
 from typing import (
     Any,
-    Dict,
-    List,
     Literal,
-    Optional,
-    Tuple,
-    Type,
-    Union,
 )
 from collections.abc import Iterable, Sequence
 
@@ -360,15 +354,6 @@ class BaseRepl(Repl):
         if interp is None:
             interp = Interp(locals=locals_)
             interp.write = self.send_to_stdouterr  # type: ignore
-        if banner is None:
-            if config.help_key:
-                banner = (
-                    _("Welcome to bpython!")
-                    + " "
-                    + _("Press <%s> for help.") % config.help_key
-                )
-            else:
-                banner = None
         if config.cli_suggestion_width <= 0 or config.cli_suggestion_width > 1:
             config.cli_suggestion_width = 1
 
@@ -493,15 +478,15 @@ class BaseRepl(Repl):
     # The methods below should be overridden, but the default implementations
     # below can be used as well.
 
-    def get_cursor_vertical_diff(self):
+    def get_cursor_vertical_diff(self) -> int:
         """Return how the cursor moved due to a window size change"""
         return 0
 
-    def get_top_usable_line(self):
+    def get_top_usable_line(self) -> int:
         """Return the top line of display that can be rewritten"""
         return 0
 
-    def get_term_hw(self):
+    def get_term_hw(self) -> tuple[int, int]:
         """Returns the current width and height of the display area."""
         return (50, 10)
 
@@ -1259,7 +1244,7 @@ class BaseRepl(Repl):
         logger.debug("indent we found was %s", indent)
         return indent
 
-    def push(self, line, insert_into_history=True):
+    def push(self, line, insert_into_history=True) -> bool:
         """Push a line of code onto the buffer, start running the buffer
 
         If the interpreter successfully runs the code, clear the buffer
@@ -1306,6 +1291,7 @@ class BaseRepl(Repl):
 
         self.coderunner.load_code(code_to_run)
         self.run_code_and_maybe_finish()
+        return not code_will_parse
 
     def run_code_and_maybe_finish(self, for_code=None):
         r = self.coderunner.run_code(for_code=for_code)

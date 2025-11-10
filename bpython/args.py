@@ -1,7 +1,7 @@
 # The MIT License
 #
 # Copyright (c) 2008 Bob Farrell
-# Copyright (c) 2012-2021 Sebastian Ramacher
+# Copyright (c) 2012-2025 Sebastian Ramacher
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -36,14 +36,13 @@ import logging
 import os
 import sys
 from pathlib import Path
-from typing import Tuple, List, Optional
 from collections.abc import Callable
 from types import ModuleType
+from typing import Never
 
 from . import __version__, __copyright__
 from .config import default_config_path, Config
 from .translations import _
-from ._typing_compat import Never
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +52,7 @@ class ArgumentParserFailed(ValueError):
 
 
 class RaisingArgumentParser(argparse.ArgumentParser):
-    def error(self, msg: str) -> Never:
+    def error(self, message: str) -> Never:
         raise ArgumentParserFailed()
 
 

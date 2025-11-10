@@ -11,7 +11,6 @@ from bpython.test.fodder import encoding_latin1
 from bpython.test.fodder import encoding_utf8
 
 pypy = "PyPy" in sys.version
-_is_py311 = sys.version_info[:2] >= (3, 11)
 
 try:
     import numpy
@@ -127,14 +126,7 @@ class TestInspection(unittest.TestCase):
         self.assertIn("file", props.argspec.kwonly)
         self.assertIn("flush", props.argspec.kwonly)
         self.assertIn("sep", props.argspec.kwonly)
-        if _is_py311:
-            self.assertEqual(
-                repr(props.argspec.kwonly_defaults["file"]), "None"
-            )
-        else:
-            self.assertEqual(
-                repr(props.argspec.kwonly_defaults["file"]), "sys.stdout"
-            )
+        self.assertEqual(repr(props.argspec.kwonly_defaults["file"]), "None")
         self.assertEqual(repr(props.argspec.kwonly_defaults["flush"]), "False")
 
     @unittest.skipUnless(

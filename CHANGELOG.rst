@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.26
+0.27
 ----
 
 General information:
@@ -16,6 +16,26 @@ Fixes:
 Changes to dependencies:
 
 
+0.26
+----
+
+General information:
+
+* This release is focused on Python 3.14 support.
+
+New features:
+
+
+Fixes:
+* #1027: Handle unspecified config paths
+* #1035: Align simple_eval with Python 3.10+
+* #1036: Make -q hide the welcome message
+* #1041: Convert sys.ps1 to a string to work-around non-str sys.ps1 from vscode
+
+Changes to dependencies:
+
+
+Support for Python 3.14 has been added. Support for Python 3.9 has been dropped.
 
 0.25
 ----

@@ -98,7 +98,7 @@ class TestCurtsiesPaintingTest(CurtsiesPaintingTest):
 
 class TestCurtsiesPaintingSimple(CurtsiesPaintingTest):
     def test_startup(self):
-        screen = fsarray([cyan(">>> "), cyan("Welcome to")])
+        screen = fsarray([cyan(">>> ")], width=10)
         self.assert_paint(screen, (0, 4))
 
     def test_enter_text(self):
@@ -113,18 +113,18 @@ class TestCurtsiesPaintingSimple(CurtsiesPaintingTest):
                     + cyan(" ")
                     + green("1")
                 ),
-                cyan("Welcome to"),
-            ]
+            ],
+            width=10,
         )
         self.assert_paint(screen, (0, 9))
 
     def test_run_line(self):
+        orig_stdout = sys.stdout
         try:
-            orig_stdout = sys.stdout
             sys.stdout = self.repl.stdout
             [self.repl.add_normal_character(c) for c in "1 + 1"]
             self.repl.on_enter(new_code=False)
-            screen = fsarray([">>> 1 + 1", "2", "Welcome to"])
+            screen = fsarray([">>> 1 + 1", "2"])
             self.assert_paint_ignoring_formatting(screen, (1, 1))
         finally:
             sys.stdout = orig_stdout
@@ -137,17 +137,8 @@ class TestCurtsiesPaintingSimple(CurtsiesPaintingTest):
             [
                 ">>> an",
                 "┌──────────────────────────────┐",
-                "│ and  any(                    │",
-                "└──────────────────────────────┘",
-                "Welcome to bpython! Press <F1> f",
-            ]
-            if sys.version_info[:2] < (3, 10)
-            else [
-                ">>> an",
-                "┌──────────────────────────────┐",
                 "│ and    anext( any(           │",
                 "└──────────────────────────────┘",
-                "Welcome to bpython! Press <F1> f",
             ]
         )
         self.assert_paint_ignoring_formatting(screen, (0, 4))

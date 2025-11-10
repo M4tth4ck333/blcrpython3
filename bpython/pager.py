@@ -30,12 +30,10 @@ import pydoc
 import subprocess
 import sys
 import shlex
-from typing import List
 
 
 def get_pager_command(default: str = "less -rf") -> list[str]:
-    command = shlex.split(os.environ.get("PAGER", default))
-    return command
+    return shlex.split(os.environ.get("PAGER", default))
 
 
 def page_internal(data: str) -> None:

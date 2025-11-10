@@ -38,7 +38,6 @@ import time
 import locale
 import signal
 import urwid
-from typing import Optional
 
 from . import args as bpargs, repl, translations
 from .formatter import theme_map
@@ -96,39 +95,7 @@ else:
 # If Twisted is not available urwid has no TwistedEventLoop attribute.
 # Code below will try to import reactor before using TwistedEventLoop.
 # I assume TwistedEventLoop will be available if that import succeeds.
-if urwid.VERSION < (1, 0, 0) and hasattr(urwid, "TwistedEventLoop"):
-
-    class TwistedEventLoop(urwid.TwistedEventLoop):
-        """TwistedEventLoop modified to properly stop the reactor.
-
-        urwid 0.9.9 and 0.9.9.1 crash the reactor on ExitMainLoop instead
-        of stopping it. One obvious way this breaks is if anything used
-        the reactor's thread pool: that thread pool is not shut down if
-        the reactor is not stopped, which means python hangs on exit
-        (joining the non-daemon threadpool threads that never exit). And
-        the default resolver is the ThreadedResolver, so if we looked up
-        any names we hang on exit. That is bad enough that we hack up
-        urwid a bit here to exit properly.
-        """
-
-        def handle_exit(self, f):
-            def wrapper(*args, **kwargs):
-                try:
-                    return f(*args, **kwargs)
-                except urwid.ExitMainLoop:
-                    # This is our change.
-                    self.reactor.stop()
-                except:
-                    # This is the same as in urwid.
-                    # We are obviously not supposed to ever hit this.
-                    print(sys.exc_info())
-                    self._exc_info = sys.exc_info()
-                    self.reactor.crash()
-
-            return wrapper
-
-else:
-    TwistedEventLoop = getattr(urwid, "TwistedEventLoop", None)
+TwistedEventLoop = getattr(urwid, "TwistedEventLoop", None)
 
 
 class StatusbarEdit(urwid.Edit):
@@ -444,7 +411,7 @@ class BPythonListBox(urwid.ListBox):
         return key
 
 
-class Tooltip(urwid.BoxWidget):
+class Tooltip(urwid.Widget):
     """Container inspired by Overlay to position our tooltip.
 
     bottom_w should be a BoxWidget.
@@ -455,6 +422,9 @@ class Tooltip(urwid.BoxWidget):
     It also positions the top window relative to the cursor position
     from the bottom window and hides it if there is no cursor.
     """
+
+    _sizing = frozenset(["box"])
+    _selectable = True
 
     def __init__(self, bottom_w, listbox):
         super().__init__()
@@ -1355,7 +1325,8 @@ def main(args=None, locals_=None, banner=None):
 
         run_find_coroutine()
 
-    myrepl.main_loop.screen.run_wrapper(run_with_screen_before_mainloop)
+    with myrepl.main_loop.screen.start():
+        run_with_screen_before_mainloop()
 
     if config.flush_output and not options.quiet:
         sys.stdout.write(myrepl.getstdout())
