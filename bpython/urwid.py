@@ -225,17 +225,11 @@ class Statusbar:
 urwid.register_signal(Statusbar, "prompt_result")
 
 
-def decoding_input_filter(keys, raw):
+def decoding_input_filter(keys: list[str], _raw: list[int]) -> list[str]:
     """Input filter for urwid which decodes each key with the locale's
     preferred encoding.'"""
     encoding = locale.getpreferredencoding()
-    converted_keys = list()
-    for key in keys:
-        if isinstance(key, str):
-            converted_keys.append(key.decode(encoding))
-        else:
-            converted_keys.append(key)
-    return converted_keys
+    return [key.decode(encoding) for key in keys]
 
 
 def format_tokens(tokensource):
