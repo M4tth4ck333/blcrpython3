@@ -1,59 +1,46 @@
-blcrpython3
+## blcrpython3 | Python 3 Checkpoint/Restore (CR)
+#  Developed by m4tth4ck
 
-blcrpython3 ist nicht nur ein Skript oder eine Sammlung von Tools – es ist ein eigenständiger, hochspezialisierter interaktiver Python-Interpreter, der von Grund auf entwickelt wurde, um die Grenzen der Netzwerk-Sicherheitsanalyse neu zu definieren.
+blcrpython3 is a high-performance Python extension designed for Berkeley Lab Checkpoint/Restore (BLCR) integration. 
+It enables the transparent freezing and resumption of CPython/IPython processes, specifically optimized for specialized 
+environments including custom Kernels, distributed file systems like ExoFS, and low-level boot environments via iPXE.
+🚀 Overview
+In high-uptime or computationally intensive environments (such as NLP Compiler Routine Canvases or Gaming Resource management),
+the ability to save the exact state of the interpreter is critical. 
+This library provides the bridge between Python’s high-level memory management and the kernel’s state-capture mechanisms.
 
-Wir haben die bewährte Leistungsfähigkeit von Python genommen und sie nahtlos mit einem Arsenal an Netzwerk-Forensik- und Penetrationstest-Funktionen verschmolzen. Inspiriert von der rauen Ästhetik des "BloodCrip"-Universums und angetrieben von einer Vision, die Präzision, Effizienz und strategische Tiefe vereint, bietet blcrpython3 eine einzigartige Umgebung für Sicherheitsexperten und Netzwerk-Enthusiasten.
-Was macht blcrpython3 so einzigartig?
+Key Features
+Zero-Loss Resumption: Capture the entire heap, stack, and register state of CPython.
 
-    Eigenständiger Interpreter: blcrpython3 ist dein neuer interaktiver Python-Kernel, der von Haus aus für Netzwerkoperationen optimiert ist. Nach dem Start hast du sofort die volle Kontrolle über Scapy, Wifite-ähnliche Mechanismen und viele weitere Werkzeuge.
+ExoFS Optimized: Direct I/O support for writing checkpoint images to ExoFS for high-speed, distributed state persistence.
 
-    Intuitive GUI-Steuerung: Ein Tkinter-basiertes Steuerungsskript macht komplexe Operationen zugänglich und verwaltet deine Projekte komfortabel über eine grafische Oberfläche.
+Hybrid State Support: Compatible with X++ (C++ in IPython) and GCC-plugin-driven Rust/SQL extensions within the same process.
 
-    SQLite-gestütztes Datenmanagement: Alle gesammelten Daten – von WLAN-Frames bis zu Hash-Sets – werden intelligent in einer internen SQLite-Datenbank organisiert und sind jederzeit abrufbar.
+iPXE Ready: Designed to be lightweight enough for deployment in minimal environments booted via iPXE.
+Component,Role
+Kernel,Interface with libcr for process image capture.
+ExoFS,Primary storage backend for .cr state files.
+Compiler Canvas,Save/Load complex NLP training or compilation routines mid-cycle.
+IPython/X++,Support for persistent interactive sessions involving C++ memory segments.
+## INSTALLATLION
 
-    Strategisches Hash-Management: Integrierte Funktionen, die an Hashcat und Pyrit erinnern und sich an der Datenbank-Logik von AiroLib orientieren, ermöglichen eine effiziente Verwaltung und Verarbeitung von Hashes.
+# Clone the repository
+git clone https://github.com/M4tth4ck333/blcrpython3.git
+cd blcrpython3/bpython
 
-    Visuelle Analogie zu EtherApe/Sparrow-WiFi: blcrpython3 ist die Kommandozeilen-zentrierte Ergänzung zu visuellen Tools wie Sparrow-WiFi und EtherApe, indem es dir die direkte Kontrolle über die zugrundeliegende Datengenerierung gibt.
+# Build the C-extension for Python 3
+python3 setup.py build_ext --inplace
 
-WLAN als Sonnensystem – Innovative Visualisierung
+import bpython.cr as cr
 
-Ein besonderes Highlight von blcrpython3 ist die innovative Darstellung von WLAN-Netzwerken als „Sonnensystem“. Access Points (APs) werden als Sonnen im Zentrum visualisiert, während verbundene Clients und weitere Netzwerke als Planeten und Monde um sie kreisen. Diese Analogie, umgesetzt mit Matplotlib und inspiriert von Tools wie EtherApe, macht komplexe Netzwerkstrukturen intuitiv erfassbar und unterstützt die strategische Analyse.
+# Initialize the CR context with an ExoFS mount point
+checkpoint_path = "/mnt/exofs/snapshots/session_01.cr"
 
-So kannst du Netzwerkdaten nicht nur sammeln und auswerten, sondern auch anschaulich darstellen – ideal für Audits, Präsentationen oder forensische Auswertungen.
-Umfassende Netzwerk-Unterstützung: Ethernet und Bluetooth
+print("Initializing complex routine...")
+# ... Your NLP or Rust-SQL logic here ...
 
-blcrpython3 beschränkt sich nicht nur auf WLAN-Analyse:
+# Trigger a manual checkpoint
+status = cr.checkpoint(checkpoint_path)
 
-    Ethernet (eth): Analysiere klassische kabelgebundene Netzwerke, schneide Pakete mit, werte Traffic aus und visualisiere Netzwerkstrukturen – alles direkt aus dem Interpreter heraus.
-    Bluetooth (hci): Erfasse und analysiere auch Bluetooth-Umgebungen. Mit Unterstützung für HCI-Schnittstellen kannst du Bluetooth-Geräte entdecken, Verbindungen überwachen und Kommunikationsmuster untersuchen.
-
-Die Visualisierungsmöglichkeiten im „Sonnensystem“-Stil stehen auch für Ethernet- und Bluetooth-Topologien zur Verfügung. So erhältst du einen ganzheitlichen Überblick über alle relevanten Netzwerkbereiche.
-Philosophie
-
-Mit blcrpython3 haben wir einen Interpreter geschaffen, der die Präzision eines "John Wick" mit der strategischen Weitsicht eines "Warren Buffett" in der Welt der Wi-Fi-Sicherheit vereint. Es ist ein Projekt, das aus der Leidenschaft für tiefe Systemkontrolle und effektive Sicherheitsaudits entstanden ist – dein eigenes Werkzeug für die nächste Generation der Netzwerk-Analyse.
-Features im Überblick
-
-    Interaktiver Python-Interpreter, spezialisiert auf Netzwerk- und Sicherheitsanalyse.
-    Nahtlose Integration von Scapy, Hash-Management und WLAN-/Ethernet-/Bluetooth-Forensik.
-    Tkinter-GUI für Projektverwaltung und intuitive Bedienung.
-    Interne SQLite-Datenbank für die strukturierte Speicherung aller Ergebnisse.
-    Effiziente Verwaltung und Analyse von Hashes und Netzwerkdaten.
-    CLI-Fokus mit Option auf Visualisierung durch integrierte und externe Tools.
-    Innovative Netzwerk-Visualisierung als Sonnensystem mit Matplotlib.
-    Umfassende Unterstützung für WLAN, Ethernet (eth) und Bluetooth (hci).
-
-Zielgruppe
-
-blcrpython3 richtet sich an:
-
-    Penetration Tester
-    Netzwerk-Forensiker
-    IT-Sicherheitsforscher
-    WLAN-, Ethernet- und Bluetooth-Enthusiasten
-
-Lizenz
-
-MIT Lizenz
-© m4tth4ck 2025
-
-blcrpython3: Präzision, Effizienz und strategische Tiefe für die Netzwerk-Sicherheitsanalyse der nächsten Generation.
+if status:
+    print(f"State successfully committed to {checkpoint_path}")
